@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for New Relic's AWS Service Catalog AppRegistry integration
+Parameters:
+  NewRelicUserKeySecretARN:
+    Type: String
+  NewRelicNerdGraphEndPoint:
+    Type: String
+    Default: 'https://api.newrelic.com/graphql'
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60 #seconds
+
+Resources:
+  NewRelicAppRegistryFn:
+    # More info about Function Resource: 
+    # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: app/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      FunctionName: newrelic-appregistry-sync-fn
+      MemorySize: 1024 #MB
+      Environment:
+        Variables:
+          NewRelicUserKeySecretARN: !Ref NewRelicUserKeySecretARN
+          NewRelicNerdGraphEndPoint: 'https://api.newrelic.com/graphql'
+      Events:
+        CWSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: 'rate(1 day)'
+            Name: newrelic-appregistry-sync-schedule
+            Description: run newrelic-appregistry-sync once every day
+            Enabled: true
+      Policies:
+      - Statement:
+        # see https://docs.aws.amazon.com/servicecatalog/latest/adminguide/controlling_access.html#slr-appregistry  
+        - Sid: AWSServiceRoleForServiceCatalogAppRegistry
+          Effect: Allow
+          Action:
+            - 'iam:CreateServiceLinkedRole'
+          Resource: >-
+            arn:aws:iam::*:role/aws-service-role/servicecatalog-appregistry.amazonaws.com/AWSServiceRoleForServiceCatalogAppRegistry*
+          Condition:
+            StringLike:
+              'iam:AWSServiceName': servicecatalog-appregistry.amazonaws.com
+        - Sid: NewRelicAppRegistryFnServiceCatalogPermission
+          Effect: Allow
+          Action:
+            - 'servicecatalog:AssociateAttributeGroup'
+            - 'servicecatalog:UpdateApplication'
+            - 'servicecatalog:ListApplications'
+            - 'servicecatalog:CreateApplication'
+            - 'servicecatalog:UpdateAttributeGroup'
+            - 'servicecatalog:UntagResource'
+            - 'servicecatalog:GetApplication'
+            - 'servicecatalog:DeleteApplication'
+            - 'servicecatalog:CreateAttributeGroup'
+            - 'servicecatalog:TagResource'
+            - 'servicecatalog:DeleteAttributeGroup'
+            - 'servicecatalog:DisassociateAttributeGroup'
+          Resource: '*'
+        - Sid: SSMGetParameterPolicy
+          Effect: Allow
+          Action:
+            - secretsmanager:GetSecretValue
+          Resource: !Ref NewRelicUserKeySecretARN
+
+Outputs:
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  NewRelicEventBridgeSchedule:
+    Description: "New Relic AppRegistry EventBridge rule (schedule) ARN"
+    Value:  !Ref NewRelicAppRegistryFnCWSchedule
+  NewRelicAppRegistryFn:
+    Description: "New Relic AppRegistry Lambda Function ARN"
+    Value: !GetAtt NewRelicAppRegistryFn.Arn

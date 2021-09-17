@@ -1,0 +1,68 @@
+{
+  "attributes": {
+    "domain": "MOBILE",
+    "entityType": "MOBILE_APPLICATION_ENTITY",
+    "metrics": [
+      {
+        "name": "appLaunchCount",
+        "title": "App Launches",
+        "value": {
+          "unit": "COUNT"
+        }
+      },
+      {
+        "name": "crashRate",
+        "title": "Crash Rate",
+        "value": {
+          "unit": "PERCENTAGE"
+        }
+      },
+      {
+        "name": "crashCount",
+        "title": "Crashes",
+        "value": {
+          "unit": "COUNT"
+        }
+      },
+      {
+        "name": "httpRequestCount",
+        "title": "Http Requests",
+        "value": {
+          "unit": "COUNT"
+        }
+      },
+      {
+        "name": "httpErrorRate",
+        "title": "HTTP Error Rate",
+        "value": {
+          "unit": "PERCENTAGE"
+        }
+      },
+      {
+        "name": "networkFailureRate",
+        "title": "Network Failure Rate",
+        "value": {
+          "unit": "PERCENTAGE"
+        }
+      }
+    ],
+    "goldenMetrics": {
+      "metrics": [
+        {
+          "name": "httpResponseTime95S"
+        },
+        {
+          "name": "httpErrorsAndNetworkFailures"
+        },
+        {
+          "name": "requestsPerMinute"
+        }
+      ]
+    },
+    "goldenTags": {
+      "tags": []
+    }
+  },
+  "description": "Mobile applications monitored by New Relic",
+  "name": "NewRelic_Mobile_App"
+}

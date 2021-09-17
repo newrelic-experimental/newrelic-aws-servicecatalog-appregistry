@@ -1,0 +1,77 @@
+{
+  "attributes": {
+    "domain": "BROWSER",
+    "entityType": "BROWSER_APPLICATION_ENTITY",
+    "metrics": [
+      {
+        "name": "spaResponseTime",
+        "title": "Spa Response Time",
+        "value": {
+          "unit": "SECONDS"
+        }
+      },
+      {
+        "name": "pageloadTimeAverage",
+        "title": "Pageload Time",
+        "value": {
+          "unit": "SECONDS"
+        }
+      },
+      {
+        "name": "pageloadThroughput",
+        "title": "Pageload Throughput",
+        "value": {
+          "unit": "PAGES_PER_SECOND"
+        }
+      },
+      {
+        "name": "ajaxThroughput",
+        "title": "Ajax Throughput",
+        "value": {
+          "unit": "REQUESTS_PER_SECOND"
+        }
+      },
+      {
+        "name": "jsErrors",
+        "title": "Js Errors",
+        "value": {
+          "unit": "PERCENTAGE"
+        }
+      }
+    ],
+    "goldenMetrics": {
+      "metrics": [
+        {
+          "name": "throughputPpm"
+        },
+        {
+          "name": "largestContentfulPaint75PercentileS"
+        },
+        {
+          "name": "firstInputDelay75PercentileMs"
+        },
+        {
+          "name": "errors"
+        }
+      ]
+    },
+    "goldenTags": {
+      "tags": [
+        {
+          "key": "language"
+        },
+        {
+          "key": "Environment"
+        },
+        {
+          "key": "Team"
+        },
+        {
+          "key": "Project"
+        }
+      ]
+    }
+  },
+  "description": "Browser applications monitored by New Relic",
+  "name": "NewRelic_Browser_App"
+}

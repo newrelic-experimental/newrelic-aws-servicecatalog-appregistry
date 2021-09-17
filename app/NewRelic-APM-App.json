@@ -1,0 +1,74 @@
+{
+  "attributes": {
+    "domain": "APM",
+    "entityType": "APM_APPLICATION_ENTITY",
+    "metrics": [
+      {
+        "name": "pageloadTimeAverage",
+        "title": "End User",
+        "value": {
+          "unit": "SECONDS"
+        }
+      },
+      {
+        "name": "pageloadThroughput",
+        "title": "Page Views",
+        "value": {
+          "unit": "PAGES_PER_SECOND"
+        }
+      },
+      {
+        "name": "responseTimeAverage",
+        "title": "Response Time",
+        "value": {
+          "unit": "SECONDS"
+        }
+      },
+      {
+        "name": "throughput",
+        "title": "Throughput",
+        "value": {
+          "unit": "REQUESTS_PER_SECOND"
+        }
+      },
+      {
+        "name": "errorRate",
+        "title": "Error Rate",
+        "value": {
+          "unit": "PERCENTAGE"
+        }
+      }
+    ],
+    "goldenMetrics": {
+      "metrics": [
+        {
+          "name": "responseTimeMs"
+        },
+        {
+          "name": "throughput"
+        },
+        {
+          "name": "errorRate"
+        }
+      ]
+    },
+    "goldenTags": {
+      "tags": [
+        {
+          "key": "language"
+        },
+        {
+          "key": "Environment"
+        },
+        {
+          "key": "Team"
+        },
+        {
+          "key": "Project"
+        }
+      ]
+    }
+  },
+    "description": "APM applications monitored by New Relic",
+  "name": "NewRelic_APM_App"
+}
